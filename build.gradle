@@ -46,6 +46,12 @@ dependencies {
 	// oAuth2
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//client
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.2.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'

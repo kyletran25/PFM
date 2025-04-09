@@ -1,17 +1,17 @@
 package com.finace.management.exception;
 
 import com.finace.management.dto.response.ApiResponse;
-import io.jsonwebtoken.io.IOException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    private static final int INVALID_INPUT_CODE = 1111;
 
     @ExceptionHandler(Exception.class)
     Object handlingException(Exception e){
@@ -24,12 +24,11 @@ public class GlobalExceptionHandler {
         log.warn("Exception: ", exception);
         ApiResponse apiResponse = new ApiResponse();
 
-//        apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
-//        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+        apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
+        apiResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
 
         return ResponseEntity.badRequest().body(apiResponse);
     }
-
 
     @ExceptionHandler(AppException.class)
     ResponseEntity<ApiResponse> handlingAppException(AppException e){
@@ -38,21 +37,38 @@ public class GlobalExceptionHandler {
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
         log.warn("AppException: ", e);
-        return ResponseEntity.status(errorCode.getCode()).body(apiResponse);
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(apiResponse);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<String> handleBadCredentialException(BadCredentialsException e) {
-        return new ResponseEntity<>("Your ID or password is incorrect. Please try again.", HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        var error = ex.getFieldError();
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            apiResponse.setCode(INVALID_INPUT_CODE);
+            apiResponse.setMessage(error.getDefaultMessage());
+            apiResponse.setResult(error.getField());
+            log.info("MethodArgumentNotValidException: {}", error);
+        } catch (Exception e) {
+            apiResponse.setCode(INVALID_INPUT_CODE);
+            apiResponse.setMessage("Uncategorized error");
+            log.error("Error: ", e);
+        }
+        return ResponseEntity.badRequest().body(apiResponse);
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<String> handleIOException(BadCredentialsException e) {
-        return new ResponseEntity<>("Upload file fail", HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<ApiResponse> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            apiResponse.setCode(ErrorCode.AUTHORIZATION_DENIED.getCode());
+            apiResponse.setMessage(ErrorCode.AUTHORIZATION_DENIED.getMessage());
+            log.info("AuthorizationDeniedException: {}", ex.getMessage());
+        } catch (Exception e) {
+            apiResponse.setCode(INVALID_INPUT_CODE);
+            apiResponse.setMessage("Uncategorized error");
+            log.error("Error: ", e);
+        }
+        return ResponseEntity.status(ErrorCode.AUTHORIZATION_DENIED.getHttpStatus()).body(apiResponse);
     }
-
-//    @ExceptionHandler(InvalidTokenException.class)
-//    public ResponseEntity<String> handleInvalidTokenException(InvalidTokenException ex) {
-//        return new ResponseEntity<>("Unauthorized: Invalid token", HttpStatus.UNAUTHORIZED);
-//    }
 }
