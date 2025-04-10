@@ -37,7 +37,17 @@ public class ItemController {
                                               @PathVariable Integer itemId) {
         return ApiResponse.<ItemResDto>builder()
                 .result(itemService.updateItem(currentUser, item, itemId))
-                .message("Update successfully")
+                .message("Update item successfully")
+                .build();
+    }
+
+    @DeleteMapping("/{itemId}")
+    @Operation(summary = "Delete item")
+    public ApiResponse<ItemResDto> deleteItem(@PathVariable Integer itemId,
+                                              @AuthenticationPrincipal AppUser currentUser) {
+        return ApiResponse.<ItemResDto>builder()
+                .result(itemService.deleteItem(currentUser, itemId))
+                .message("Delete item successfully")
                 .build();
     }
 }

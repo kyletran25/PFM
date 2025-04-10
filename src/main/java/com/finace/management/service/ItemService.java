@@ -64,4 +64,13 @@ public class ItemService {
         }
         return itemMapper.toItemResDto(updateItem);
     }
+
+    @Transactional
+    public ItemResDto deleteItem(AppUser currentUser, Integer itemId) {
+        Item item = itemRepository.findByIdAndCreatedBy(itemId, currentUser)
+                .orElseThrow(() -> new AppException(ErrorCode.ITEM_NOT_EXISTED));
+        ItemResDto resDto = itemMapper.toItemResDto(item);
+        itemRepository.delete(item);
+        return resDto;
+    }
 }
