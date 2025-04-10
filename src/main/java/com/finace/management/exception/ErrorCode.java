@@ -1,7 +1,6 @@
 package com.finace.management.exception;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -17,6 +16,8 @@ public enum ErrorCode {
     PW_MUST_ENG(9008, "Password must be written in English and only contain letters, digits, and special characters (!@#$%^&*)", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(9009, "User didn't exist", HttpStatus.BAD_REQUEST),
     AUTHORIZATION_DENIED(9010, "Authorization Denied", HttpStatus.UNAUTHORIZED),
+    DUPLICATE_CATEGORY(9011, "Duplicate category", HttpStatus.BAD_REQUEST),
+    CATEGORY_NOT_EXISTED(9012, "Category didn't exist", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(8888, "Uncategorized exception", HttpStatus.BAD_REQUEST);
 
     private final int code;
