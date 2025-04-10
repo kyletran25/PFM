@@ -18,6 +18,7 @@ public enum ErrorCode {
     AUTHORIZATION_DENIED(9010, "Authorization Denied", HttpStatus.UNAUTHORIZED),
     DUPLICATE_CATEGORY(9011, "Duplicate category", HttpStatus.BAD_REQUEST),
     CATEGORY_NOT_EXISTED(9012, "Category didn't exist", HttpStatus.BAD_REQUEST),
+    ITEM_NOT_EXISTED(9013, "Item didn't exist", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(8888, "Uncategorized exception", HttpStatus.BAD_REQUEST);
 
     private final int code;

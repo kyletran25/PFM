@@ -3,15 +3,16 @@ package com.finace.management.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "item", schema = "finance_manage")
 public class Item {
     @Id
@@ -40,5 +41,10 @@ public class Item {
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "created_by", nullable = false)
+    private AppUser createdBy;
 
 }
