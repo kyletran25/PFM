@@ -36,4 +36,8 @@ public class Category {
     @Column(name = "isDeleted", nullable = false)
     private Boolean isDeleted = false;
 
+    @NotNull
+    @Column(name = "expense", nullable = false)
+    private Integer expense;
+
 }

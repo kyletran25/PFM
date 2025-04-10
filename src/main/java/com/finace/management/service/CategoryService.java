@@ -1,6 +1,7 @@
 package com.finace.management.service;
 
 import com.finace.management.dto.request.AddCategoryReqDto;
+import com.finace.management.dto.request.UpdateCategoryReqDto;
 import com.finace.management.dto.response.CategoryResDto;
 import com.finace.management.entity.AppUser;
 import com.finace.management.entity.Category;
@@ -38,17 +39,23 @@ public class CategoryService {
                 .createdBy(currentUser)
                 .isDeleted(false)
                 .color(addCategoryReqDto.getColor() != null ? addCategoryReqDto.getColor() : "#bebebe")
+                .expense(addCategoryReqDto.getExpense())
                 .build();
         return categoryMapper.toCategoryResDto(categoryRepository.save(addCategory));
     }
 
     @Transactional
-    public CategoryResDto updateCategory(AppUser currentUser, Integer categoryId, AddCategoryReqDto addCategoryReqDto) {
+    public CategoryResDto updateCategory(AppUser currentUser, Integer categoryId, UpdateCategoryReqDto updateCategoryReqDto) {
         Category category = categoryRepository.findByIdAndCreatedByAndIsDeletedIsFalse(categoryId, currentUser)
                 .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
-        category.setName(addCategoryReqDto.getName());
-        if (addCategoryReqDto.getColor() != null) {
-            category.setColor(addCategoryReqDto.getColor());
+        if(updateCategoryReqDto.getName() != null){
+            category.setName(updateCategoryReqDto.getName());
+        }
+        if(updateCategoryReqDto.getExpense() != null){
+            category.setExpense(updateCategoryReqDto.getExpense());
+        }
+        if (updateCategoryReqDto.getColor() != null) {
+            category.setColor(updateCategoryReqDto.getColor());
         }
         return categoryMapper.toCategoryResDto(category);
     }

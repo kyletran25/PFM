@@ -1,6 +1,7 @@
 package com.finace.management.controller;
 
 import com.finace.management.dto.request.AddCategoryReqDto;
+import com.finace.management.dto.request.UpdateCategoryReqDto;
 import com.finace.management.dto.response.ApiResponse;
 import com.finace.management.dto.response.CategoryResDto;
 import com.finace.management.entity.AppUser;
@@ -42,7 +43,7 @@ public class CategoryController {
     @Operation(summary = "Update category")
     public ApiResponse<CategoryResDto> updateCategory(@AuthenticationPrincipal AppUser currentUser,
                                                       @PathVariable(name = "categoryId") Integer categoryId,
-                                                      @RequestBody @Valid AddCategoryReqDto addCategoryReqDto) {
+                                                      @RequestBody @Valid UpdateCategoryReqDto addCategoryReqDto) {
         return ApiResponse.<CategoryResDto>builder()
                 .result(categoryService.updateCategory(currentUser, categoryId, addCategoryReqDto))
                 .message("Update category successfully").build();

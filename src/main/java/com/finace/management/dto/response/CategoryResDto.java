@@ -13,4 +13,5 @@ public class CategoryResDto {
     private Integer id;
     private String name;
     private String color;
+    private Integer expense;
 }

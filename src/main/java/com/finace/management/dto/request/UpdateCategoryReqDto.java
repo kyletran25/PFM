@@ -8,13 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class AddCategoryReqDto {
-    @NotBlank
+public class UpdateCategoryReqDto {
     private String name;
-    @NotNull
     private Integer expense;
     private String color;
 }
