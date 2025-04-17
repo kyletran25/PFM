@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class CategoryResDto {
     private String name;
     private String color;
     private Integer expense;
+    private LocalDateTime createdDate;
 }

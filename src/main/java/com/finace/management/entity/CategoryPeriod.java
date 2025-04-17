@@ -9,42 +9,42 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "category", schema = "finance_manage")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+@Entity
+@Table(name = "category_period")
+public class CategoryPeriod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 255)
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "color", nullable = false)
-    private String color;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private AppUser createdBy;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @NotNull
-    @Column(name = "isDeleted", nullable = false)
-    private Boolean isDeleted = false;
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
 
     @NotNull
-    @Column(name = "expense", nullable = false)
-    private Integer expense;
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
+
+    @NotNull
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
 
     @NotNull
     @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
+
+    @Size(max = 25)
+    @NotNull
+    @Column(name = "`year_month`", nullable = false, length = 25)
+    private String yearMonth;
 
     @PrePersist
     protected void onPersist() {

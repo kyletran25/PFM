@@ -1,6 +1,5 @@
 package com.finace.management.dto.response;
 
-import com.finace.management.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +11,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ItemResDto {
+public class CategoryPeriodResDto {
     private Integer id;
-    private String name;
-    private Integer value;
-    private CategoryPeriodResDto categoryPeriod;
+    private CategoryResDto category;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Integer amount;
     private LocalDateTime createdDate;
-    private String description;
+    private String yearMonth;
 }

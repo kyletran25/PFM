@@ -19,6 +19,9 @@ public enum ErrorCode {
     DUPLICATE_CATEGORY(9011, "Duplicate category", HttpStatus.BAD_REQUEST),
     CATEGORY_NOT_EXISTED(9012, "Category didn't exist", HttpStatus.BAD_REQUEST),
     ITEM_NOT_EXISTED(9013, "Item didn't exist", HttpStatus.BAD_REQUEST),
+    INCOME_MONTH_NOT_EXISTED(9014, "Income Monthly didn't exist", HttpStatus.BAD_REQUEST),
+    CATEGORY_EXPENSE_EXCEEDS_INCOME(9015, "Category expense exceeds the current income", HttpStatus.BAD_REQUEST),
+    INCOME_MONTHLY_EXISTED(9016, "Currently, we just allow to create one income monthly", HttpStatus.BAD_REQUEST),
     UNCATEGORIZED_EXCEPTION(8888, "Uncategorized exception", HttpStatus.BAD_REQUEST);
 
     private final int code;

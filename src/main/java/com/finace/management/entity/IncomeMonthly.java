@@ -10,41 +10,41 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "category", schema = "finance_manage")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+@Table(name = "income_monthly")
+public class IncomeMonthly {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 255)
     @NotNull
-    @Column(name = "name", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private AppUser user;
+
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @NotNull
+    @Column(name = "start_day", nullable = false)
+    private Integer startDay;
+
     @Size(max = 255)
-    @NotNull
-    @Column(name = "color", nullable = false)
-    private String color;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private AppUser createdBy;
-
-    @NotNull
-    @Column(name = "isDeleted", nullable = false)
-    private Boolean isDeleted = false;
-
-    @NotNull
-    @Column(name = "expense", nullable = false)
-    private Integer expense;
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
+
+    @NotNull
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
 
     @PrePersist
     protected void onPersist() {

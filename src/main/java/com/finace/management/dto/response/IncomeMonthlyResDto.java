@@ -1,6 +1,9 @@
 package com.finace.management.dto.response;
 
-import com.finace.management.entity.Category;
+import com.finace.management.entity.AppUser;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ItemResDto {
+public class IncomeMonthlyResDto {
     private Integer id;
     private String name;
-    private Integer value;
-    private CategoryPeriodResDto categoryPeriod;
-    private LocalDateTime createdDate;
+    private Integer startDay;
     private String description;
+    private LocalDateTime createdDate;
+    private Integer amount;
 }
