@@ -1,6 +1,5 @@
 package com.finace.management.dto.response;
 
-import com.finace.management.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

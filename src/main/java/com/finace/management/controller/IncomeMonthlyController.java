@@ -2,7 +2,6 @@ package com.finace.management.controller;
 
 import com.finace.management.dto.request.AddIncomeMonthlyReqDto;
 import com.finace.management.dto.response.ApiResponse;
-import com.finace.management.dto.response.CategoryResDto;
 import com.finace.management.dto.response.IncomeMonthlyResDto;
 import com.finace.management.entity.AppUser;
 import com.finace.management.service.IncomeMonthlyService;
